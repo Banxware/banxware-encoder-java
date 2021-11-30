@@ -19,15 +19,14 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CompressTest {
+class IntegrationTest {
 
     public static final String DEV_URL = "https://panther-services-api-dev.pc-in.net/link-integration?merchant_info=";
 
     @Test
     @SneakyThrows
-    void encode() {
+    void givenAnMerchantObjectItShouldEncodeAndSuccessfullySaveTheObjectUsingBanxwareService() {
         BrotliLoader.isBrotliAvailable();
-
 
         // Given
         String base64Encode = LinkIntegration.encode(merchantObject());
