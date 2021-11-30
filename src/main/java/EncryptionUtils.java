@@ -1,14 +1,13 @@
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -65,6 +64,33 @@ public class EncryptionUtils {
         KeyFactory kf = KeyFactory.getInstance("RSA");
 
         return kf.generatePrivate(spec);
+    }
+
+    public static byte[] generateIvParameterSpec() {
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+
+        return iv;
+    }
+
+    public static SecretKey generateRandomKey() {
+        byte[] key = new byte[32];
+        new SecureRandom().nextBytes(key);
+        return new SecretKeySpec(key, "AES");
+    }
+
+    public static String sign(String merchantInfo) throws Exception {
+        byte[] merchantInfoBytes = merchantInfo.getBytes(StandardCharsets.UTF_8);
+
+        final PrivateKey privateKey = EncryptionUtils.readPrivateKey();
+
+        Signature signature = Signature.getInstance("SHA256WithRSA");
+        signature.initSign(privateKey);
+        signature.update(merchantInfoBytes);
+
+        byte[] signatureBytes = signature.sign();
+
+        return Base64.getEncoder().encodeToString(signatureBytes);
     }
 }
 

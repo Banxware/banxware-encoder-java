@@ -16,73 +16,38 @@ public class LinkIntegration {
 
     public static String encode(MerchantLinkData merchantLinkData) {
         try {
-            // convert merchant link to json and signs with tenants private key
+            // convert merchant link to json and signs with tenants' private key
             String merchantInfo = toJson(merchantLinkData);
             final Message message = Message.builder()
                     .merchantInfo(merchantInfo)
-                    .signature(sign(merchantInfo))
+                    .signature(EncryptionUtils.sign(merchantInfo))
                     .build();
 
-            System.out.println();
-
-            // compress
+            // compress using brotli
             byte[] compressedJsonBlob = Compressor.compress(toJson(message));
 
-            // encrypt compressed blob with random key
-            byte[] ivspec = generateIvParameterSpec();
-            System.out.println("IV: " + Base64.getEncoder().encodeToString(ivspec));
-            SecretKey skey = generateRandomKey();
-            System.out.println("KEY: " + Base64.getEncoder().encodeToString(skey.getEncoded()));
-
-            byte[] encryptedJsonWithSymmetricKey = EncryptionUtils.encrypt(compressedJsonBlob, skey, ivspec); // TODO
-            String encryptedJsonWithSymmetricKeyString = Base64.getEncoder().encodeToString(encryptedJsonWithSymmetricKey);
-
-//            String encryptedJsonWithSymmetricKeyString = new String(Base64.getEncoder().encode(encryptedJsonWithSymmetricKey));
+            // create initialization vector and a random symmetric key
+            byte[] ivspec = EncryptionUtils.generateIvParameterSpec();
+            SecretKey skey = EncryptionUtils.generateRandomKey();
             String symetricKeyAsString = Base64.getEncoder().encodeToString(skey.getEncoded());
             String ivParameterSpecString = Base64.getEncoder().encodeToString(ivspec);
 
             String encryptedJsonWithSymmetricKeyPlusIvParameter = symetricKeyAsString + "$" + ivParameterSpecString;
-//            System.out.println("encryptedJsonWithSymmetricKeyPlusIvParameter: " + encryptedJsonWithSymmetricKeyPlusIvParameter); // TODO REMOVE ME
+
+            // encrypt compressed blob with random key
+            byte[] encryptedJsonWithSymmetricKey = EncryptionUtils.encrypt(compressedJsonBlob, skey, ivspec);
+            String encryptedJsonWithSymmetricKeyString = Base64.getEncoder().encodeToString(encryptedJsonWithSymmetricKey);
 
             // encrypt symmetric key with banxware pub key
             PublicKey publicKey = EncryptionUtils.readPublicKey();
             byte[] encryptedJsonWithSymmetricKeyPlusIvParameterEncryptedWithBanxwarePubKey = EncryptionUtils.encrypt(encryptedJsonWithSymmetricKeyPlusIvParameter, publicKey);
-
             String symmetricKeyEncryptedWithBanxwarePubKeyString = Base64.getEncoder().encodeToString(encryptedJsonWithSymmetricKeyPlusIvParameterEncryptedWithBanxwarePubKey);
-            System.out.println("symmetricKeyEncryptedWithBanxwarePubKeyString: " + symmetricKeyEncryptedWithBanxwarePubKeyString);
 
             return encryptedJsonWithSymmetricKeyString + "$" + symmetricKeyEncryptedWithBanxwarePubKeyString;
         } catch (Exception e) {
             System.out.println(e);
             return null;
         }
-    }
-
-    private static byte[] generateIvParameterSpec() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-
-        return iv;
-    }
-
-    private static SecretKey generateRandomKey() {
-        byte[] key = new byte[32];
-        new SecureRandom().nextBytes(key);
-        return new SecretKeySpec(key, "AES");
-    }
-
-    private static String sign(String merchantInfo) throws Exception {
-        byte[] merchantInfoBytes = merchantInfo.getBytes(StandardCharsets.UTF_8);
-
-        final PrivateKey privateKey = EncryptionUtils.readPrivateKey();
-
-        Signature signature = Signature.getInstance("SHA256WithRSA");
-        signature.initSign(privateKey);
-        signature.update(merchantInfoBytes);
-
-        byte[] signatureBytes = signature.sign();
-
-        return Base64.getEncoder().encodeToString(signatureBytes);
     }
 
     private static String toJson(Object o) {
