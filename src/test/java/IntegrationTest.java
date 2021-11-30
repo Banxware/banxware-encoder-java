@@ -47,7 +47,6 @@ class IntegrationTest {
         assertEquals(response.getStatusLine().getStatusCode(), 200);
     }
 
-
     private static MerchantLinkData merchantObject() {
         Address address = Address.builder()
                 .addressLine1("FOO")
