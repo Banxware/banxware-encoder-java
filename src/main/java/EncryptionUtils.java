@@ -4,7 +4,6 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.MGF1ParameterSpec;
@@ -30,11 +29,8 @@ public class EncryptionUtils {
         return ci.doFinal(input);
     }
 
-    public static PublicKey readPublicKey() throws Exception {
-        InputStream inputStream = EncryptionUtils.class.getResourceAsStream("resources/banxware-pub.key");
-        String rawKey = FileUtils.readFromInputStream(inputStream);
-
-        String privateKeyPEM = rawKey
+    public static PublicKey readPublicKey(String key) throws Exception {
+        String privateKeyPEM = key
                 .replace("-----BEGIN PUBLIC KEY-----", "")
                 .replaceAll(System.lineSeparator(), "")
                 .replace("-----END PUBLIC KEY-----", "");

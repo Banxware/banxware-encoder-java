@@ -1,6 +1,5 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dto.Message;
 import model.MerchantLinkData;
 
 import javax.crypto.SecretKey;
@@ -9,7 +8,7 @@ import java.util.Base64;
 
 public class LinkIntegration {
 
-    public static String encode(MerchantLinkData merchantLinkData, String privateKey) {
+    public static String encode(MerchantLinkData merchantLinkData, String publicKey, String privateKey) {
         try {
             // convert merchant link to json and signs with tenants' private key
             String merchantInfo = toJson(merchantLinkData);
@@ -34,8 +33,8 @@ public class LinkIntegration {
             String encryptedJsonWithSymmetricKeyString = Base64.getEncoder().encodeToString(encryptedJsonWithSymmetricKey);
 
             // encrypt symmetric key with banxware pub key
-            PublicKey publicKey = EncryptionUtils.readPublicKey();
-            byte[] encryptedJsonWithSymmetricKeyPlusIvParameterEncryptedWithBanxwarePubKey = EncryptionUtils.encrypt(encryptedJsonWithSymmetricKeyPlusIvParameter, publicKey);
+            PublicKey pubKey = EncryptionUtils.readPublicKey(publicKey);
+            byte[] encryptedJsonWithSymmetricKeyPlusIvParameterEncryptedWithBanxwarePubKey = EncryptionUtils.encrypt(encryptedJsonWithSymmetricKeyPlusIvParameter, pubKey);
             String symmetricKeyEncryptedWithBanxwarePubKeyString = Base64.getEncoder().encodeToString(encryptedJsonWithSymmetricKeyPlusIvParameterEncryptedWithBanxwarePubKey);
 
             return encryptedJsonWithSymmetricKeyString + "$" + symmetricKeyEncryptedWithBanxwarePubKeyString;

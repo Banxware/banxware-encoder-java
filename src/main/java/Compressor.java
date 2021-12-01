@@ -1,15 +1,14 @@
 import com.nixxcode.jvmbrotli.enc.BrotliOutputStream;
 import com.nixxcode.jvmbrotli.enc.Encoder;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 
-public class Compressor {
+class Compressor {
     public static byte[] compress(String in) throws IOException {
-        InputStream inFile = IOUtils.toInputStream(in, Charset.defaultCharset());
+        InputStream inFile = new ByteArrayInputStream(in.getBytes());
         ByteArrayOutputStream outFile = new ByteArrayOutputStream();
 
         Encoder.Parameters params = new Encoder.Parameters().setQuality(4).setWindow(16);
