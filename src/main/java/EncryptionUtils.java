@@ -47,23 +47,6 @@ public class EncryptionUtils {
         return kf.generatePublic(spec);
     }
 
-    public static PrivateKey readPrivateKey() throws Exception {
-        InputStream inputStream = EncryptionUtils.class.getResourceAsStream("resources/test-tenant-private.key");
-        String rawKey = FileUtils.readFromInputStream(inputStream);
-
-        String privateKeyPEM = rawKey
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replaceAll(System.lineSeparator(), "")
-                .replace("-----END PRIVATE KEY-----", "");
-
-        byte[] decode = Base64.getDecoder().decode(privateKeyPEM);
-
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decode);
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-
-        return kf.generatePrivate(spec);
-    }
-
     public static byte[] generateIvParameterSpec() {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
@@ -77,10 +60,20 @@ public class EncryptionUtils {
         return new SecretKeySpec(key, "AES");
     }
 
-    public static String sign(String merchantInfo) throws Exception {
+    public static String sign(String merchantInfo, String key) throws Exception {
         byte[] merchantInfoBytes = merchantInfo.getBytes(StandardCharsets.UTF_8);
 
-        final PrivateKey privateKey = EncryptionUtils.readPrivateKey();
+        String privateKeyPEM = key
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replaceAll(System.lineSeparator(), "")
+                .replace("-----END PRIVATE KEY-----", "");
+
+        byte[] decode = Base64.getDecoder().decode(privateKeyPEM);
+
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decode);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+
+        final PrivateKey privateKey = kf.generatePrivate(spec);
 
         Signature signature = Signature.getInstance("SHA256WithRSA");
         signature.initSign(privateKey);

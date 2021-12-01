@@ -9,13 +9,13 @@ import java.util.Base64;
 
 public class LinkIntegration {
 
-    public static String encode(MerchantLinkData merchantLinkData) {
+    public static String encode(MerchantLinkData merchantLinkData, String privateKey) {
         try {
             // convert merchant link to json and signs with tenants' private key
             String merchantInfo = toJson(merchantLinkData);
             final Message message = Message.builder()
                     .merchantInfo(merchantInfo)
-                    .signature(EncryptionUtils.sign(merchantInfo))
+                    .signature(EncryptionUtils.sign(merchantInfo, privateKey))
                     .build();
 
             // compress using brotli
