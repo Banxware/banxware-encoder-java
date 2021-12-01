@@ -32,7 +32,7 @@
             <groupId>com.nixxcode.jvmbrotli</groupId>
             <artifactId>jvmbrotli</artifactId>
             <version>0.2.0</version>
-<!--            <optional>true</optional>-->
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -105,7 +105,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Banxware Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Banxware/banxware-encoder</url>
+            <url>https://github.com/banxware/banxware-encoder-java</url>
         </repository>
     </distributionManagement>
 </project>
