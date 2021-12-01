@@ -1,5 +1,4 @@
 import com.nixxcode.jvmbrotli.common.BrotliLoader;
-import lombok.SneakyThrows;
 import model.MerchantLinkData;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -11,6 +10,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegrationTest {
@@ -18,8 +19,7 @@ class IntegrationTest {
     public static final String DEV_URL = "https://panther-services-api-dev.pc-in.net/merchant-integration";
 
     @Test
-    @SneakyThrows
-    void givenAnMerchantObjectItShouldEncodeAndSuccessfullySaveTheObjectUsingBanxwareService() {
+    void givenAnMerchantObjectItShouldEncodeAndSuccessfullySaveTheObjectUsingBanxwareService() throws IOException {
         BrotliLoader.isBrotliAvailable();
 
         // Given
