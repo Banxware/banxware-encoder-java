@@ -4,9 +4,8 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.*;
 import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -14,9 +13,6 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 public class EncryptionUtils {
-
-    public static final String BANXWARE_PUB_KEY = "src/resources/banxware-pub.key";
-    public static final String TENANT_PRIVATE_KEY = "src/resources/test-tenant-private.key";
 
     public static byte[] encrypt(String input, Key key) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPPadding");
@@ -35,9 +31,10 @@ public class EncryptionUtils {
     }
 
     public static PublicKey readPublicKey() throws Exception {
-        String key = new String(Files.readAllBytes(Paths.get(BANXWARE_PUB_KEY)));
+        InputStream inputStream = EncryptionUtils.class.getResourceAsStream("resources/banxware-pub.key");
+        String rawKey = FileUtils.readFromInputStream(inputStream);
 
-        String privateKeyPEM = key
+        String privateKeyPEM = rawKey
                 .replace("-----BEGIN PUBLIC KEY-----", "")
                 .replaceAll(System.lineSeparator(), "")
                 .replace("-----END PUBLIC KEY-----", "");
@@ -51,9 +48,10 @@ public class EncryptionUtils {
     }
 
     public static PrivateKey readPrivateKey() throws Exception {
-        String key = new String(Files.readAllBytes(Paths.get(TENANT_PRIVATE_KEY)));
+        InputStream inputStream = EncryptionUtils.class.getResourceAsStream("resources/test-tenant-private.key");
+        String rawKey = FileUtils.readFromInputStream(inputStream);
 
-        String privateKeyPEM = key
+        String privateKeyPEM = rawKey
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replaceAll(System.lineSeparator(), "")
                 .replace("-----END PRIVATE KEY-----", "");
