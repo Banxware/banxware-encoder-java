@@ -1,5 +1,6 @@
+import com.banxware.LinkIntegration;
+import com.banxware.model.MerchantLinkData;
 import com.nixxcode.jvmbrotli.common.BrotliLoader;
-import model.MerchantLinkData;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

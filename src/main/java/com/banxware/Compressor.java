@@ -1,3 +1,5 @@
+package com.banxware;
+
 import com.nixxcode.jvmbrotli.enc.BrotliOutputStream;
 import com.nixxcode.jvmbrotli.enc.Encoder;
 

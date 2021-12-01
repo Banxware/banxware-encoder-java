@@ -1,4 +1,4 @@
-package model;
+package com.banxware.model;
 
 import java.util.List;
 

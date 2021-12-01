@@ -1,4 +1,4 @@
-package model;
+package com.banxware.model;
 
 public final class Revenue {
     private final Integer month;

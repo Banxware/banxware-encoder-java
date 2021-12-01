@@ -1,3 +1,5 @@
+package com.banxware;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
@@ -11,7 +13,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-public class EncryptionUtils {
+class EncryptionUtils {
 
     public static byte[] encrypt(String input, Key key) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPPadding");

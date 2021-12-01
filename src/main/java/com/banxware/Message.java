@@ -1,3 +1,5 @@
+package com.banxware;
+
 class Message {
     private final String merchantInfo;
     private final String signature;
@@ -44,7 +46,7 @@ class Message {
     }
 
     public String toString() {
-        return "Message(merchantInfo=" + this.getMerchantInfo() + ", signature=" + this.getSignature() + ")";
+        return "com.banxware.Message(merchantInfo=" + this.getMerchantInfo() + ", signature=" + this.getSignature() + ")";
     }
 
     public static class MessageBuilder {
@@ -69,7 +71,7 @@ class Message {
         }
 
         public String toString() {
-            return "Message.MessageBuilder(merchantInfo=" + this.merchantInfo + ", signature=" + this.signature + ")";
+            return "com.banxware.Message.MessageBuilder(merchantInfo=" + this.merchantInfo + ", signature=" + this.signature + ")";
         }
     }
 }

@@ -1,6 +1,8 @@
+package com.banxware;
+
+import com.banxware.model.MerchantLinkData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.MerchantLinkData;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;

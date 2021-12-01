@@ -1,7 +1,7 @@
-import model.Address;
-import model.MerchantLinkData;
-import model.Owner;
-import model.Revenue;
+import com.banxware.model.Address;
+import com.banxware.model.MerchantLinkData;
+import com.banxware.model.Owner;
+import com.banxware.model.Revenue;
 
 import java.time.Instant;
 import java.util.Collections;

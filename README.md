@@ -24,7 +24,7 @@ String yourPrivateKey = Fixtures.privateKey();
 String banxwarePublicKey = Fixtures.publicKey();
 
 // When
-String blob = LinkIntegration.encode(merchantLinkData, banxwarePublicKey, yourPrivateKey);
+String blob = com.banxware.LinkIntegration.encode(merchantLinkData, banxwarePublicKey, yourPrivateKey);
 ```
 
 For a more detailed, check the IntegrationTest.
