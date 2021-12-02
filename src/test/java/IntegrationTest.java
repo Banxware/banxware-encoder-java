@@ -38,6 +38,7 @@ class IntegrationTest {
                 .setEntity(new StringEntity("{\"merchantInfo\":\"" + blob + "\"}", ContentType.APPLICATION_JSON))
                 .setHeader(HttpHeaders.CONTENT_TYPE, "application/json")
                 .setHeader("Tenant-Code", "TEST")
+                .setHeader("Correlation-Id", "c2c72316-ca3f-4d21-80eb-021e652f4f5f")
                 .build();
 
         HttpResponse response = client.execute(request);
