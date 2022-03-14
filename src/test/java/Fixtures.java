@@ -21,7 +21,8 @@ class Fixtures {
                 .build();
 
         String date = Date.from(Instant.now()).toString();
-        Owner owner = Owner.builder()
+        Owner owner = Owner.
+                builder()
                 .title("FOO")
                 .email("FOO")
                 .firstName("FOO")
@@ -29,9 +30,10 @@ class Fixtures {
                 .dateOfBirth(date)
                 .nationality("FOO")
                 .taxNumber("FOO")
-                .sharesPercent(50.5F)
+                .sharesPercent(100F)
                 .ultimateBeneficial(true)
                 .legalRepresentative(true)
+                .applicantOwner(true)
                 .address(address)
                 .build();
 
@@ -46,6 +48,7 @@ class Fixtures {
                 .merchantId("FOOOO")
                 .name("FOOOO")
                 .email("FOOOO")
+                .mcc("FOOOO")
                 .address(address)
                 .owners(Collections.singletonList(owner))
                 .timeOfRunBusinessInMonths(24)
