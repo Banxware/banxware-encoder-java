@@ -8,20 +8,20 @@ import java.util.zip.GZIPOutputStream;
 
 class Compressor {
     public static byte[] compress(String in) throws IOException {
-        InputStream inFile = new ByteArrayInputStream(in.getBytes());
-        ByteArrayOutputStream outFile = new ByteArrayOutputStream();
+        InputStream fis = new ByteArrayInputStream(in.getBytes());
+        ByteArrayOutputStream fos = new ByteArrayOutputStream();
+        GZIPOutputStream gzipOS = new GZIPOutputStream(fos);
 
-        GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outFile);
-
-        int read = inFile.read();
-        while (read > -1) { // -1 means EOF
-            gzipOutputStream.write(read);
-            read = inFile.read();
+        byte[] buffer = new byte[1024];
+        int len;
+        while ((len = fis.read(buffer)) != -1) {
+            gzipOS.write(buffer, 0, len);
         }
 
-        gzipOutputStream.close();
-        inFile.close();
+        gzipOS.close();
+        fos.close();
+        fis.close();
 
-        return outFile.toByteArray();
+        return fos.toByteArray();
     }
 }
