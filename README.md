@@ -13,12 +13,6 @@ Maven:
 </dependency>
 
 <dependency>
-    <groupId>com.nixxcode.jvmbrotli</groupId>
-    <artifactId>jvmbrotli</artifactId>
-    <version>0.2.0</version>
-</dependency>
-
-<dependency>
     <groupId>com.google.code.gson</groupId>
     <artifactId>gson</artifactId>
     <version>2.8.9</version>
@@ -29,16 +23,7 @@ Gradle:
 ```groovy
 implementation "com.banxware:banxware-encoder:1.0.1"
 implementation 'com.google.code.gson:gson:2.8.9'
-
-implementation group: 'com.nixxcode.jvmbrotli', name: 'jvmbrotli', version: '0.2.0'
-implementation group: 'com.nixxcode.jvmbrotli', name: 'DESIRED_ARCHITECTURE', version: '0.2.0'
 ```
-
-Replace the DESIRED_ARCHITECTURE name with one of the options below:
-
-* jvmbrotli-darwin-x86-amd64
-* jvmbrotli-win32-x86-amd64 
-* jvmbrotli-linux-x86-amd64 
 
 ## Usage
 

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class LinkIntegration {
@@ -19,7 +20,6 @@ public class LinkIntegration {
                     .signature(EncryptionUtils.sign(merchantInfo, privateKey))
                     .build();
 
-            // compress using brotli
             byte[] compressedJsonBlob = Compressor.compress(toJson(message));
 
             // create initialization vector and a random symmetric key
