@@ -3,69 +3,103 @@ import com.banxware.model.MerchantLinkData;
 import com.banxware.model.Owner;
 import com.banxware.model.Revenue;
 
-import java.time.Instant;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
+import java.util.UUID;
 
 class Fixtures {
 
     static MerchantLinkData merchantObject() {
+
         Address address = Address.builder()
-                .addressLine1("FOO")
-                .addressLine2("FOO")
-                .streetNumber("FOO")
-                .zipCode("FOO")
-                .city("FOO")
-                .state("FOO")
-                .country("FOO")
+                .addressLine1("Teststrasse")
+                .addressLine2("complement")
+                .streetNumber("1/2")
+                .zipCode("00000")
+                .city("Berlin")
+                .state("Berlin")
+                .country("DEU")
                 .build();
 
-        String date = Date.from(Instant.now()).toString();
+        String date = "1988-11-25";
+
         Owner owner = Owner.
                 builder()
-                .title("FOO")
-                .email("FOO")
-                .firstName("FOO")
-                .lastName("FOO")
+                .title("mr")
+                .email("owner_1@email.com")
+                .firstName("Owner 1")
+                .lastName("Last name")
                 .dateOfBirth(date)
-                .nationality("FOO")
-                .taxNumber("FOO")
+                .nationality("BRA")
+                .taxNumber("1234567890")
                 .sharesPercent(100F)
-                .ultimateBeneficial(true)
+                .ultimateBeneficial(false)
                 .legalRepresentative(true)
                 .applicantOwner(true)
                 .address(address)
                 .build();
 
-        Revenue revenue = Revenue.builder()
-                .month(12)
+        Revenue revenue1 = Revenue.builder()
+                .month(6)
                 .revenueInCents(5000000)
-                .currency("123")
+                .currency("EUR")
                 .build();
 
+        Revenue revenue2 = Revenue.builder()
+                .month(7)
+                .revenueInCents(5105600)
+                .currency("EUR")
+                .build();
+
+        Revenue revenue3 = Revenue.builder()
+                .month(8)
+                .revenueInCents(5105600)
+                .currency("EUR")
+                .build();
+
+        Revenue revenue4 = Revenue.builder()
+                .month(9)
+                .revenueInCents(5105600)
+                .currency("EUR")
+                .build();
+
+        Revenue revenue5 = Revenue.builder()
+                .month(10)
+                .revenueInCents(5105600)
+                .currency("EUR")
+                .build();
+
+        Revenue revenue6 = Revenue.builder()
+                .month(11)
+                .revenueInCents(5105600)
+                .currency("EUR")
+                .build();
 
         return MerchantLinkData.builder()
-                .merchantId("FOOOO")
-                .name("FOOOO")
-                .email("FOOOO")
-                .mcc("FOOOO")
+                .merchantId(UUID.randomUUID().toString())
+                .name("test GmbH")
+                .email("test_gmbh@email.com")
+                .mcc("something")
                 .address(address)
                 .owners(Collections.singletonList(owner))
                 .timeOfRunBusinessInMonths(24)
-                .lastSixMonthsRevenue(Collections.singletonList(revenue))
-                .legalForm("FOOOO")
-                .phoneNumber("FOOOO")
-                .responsiblePublicAuthority("FOOOO")
+                .lastSixMonthsRevenue(Arrays.asList(
+                        revenue1, revenue2, revenue3, revenue4, revenue5, revenue6
+                ))
+                .legalForm("gmbh")
+                .phoneNumber("+491639658152")
+                .responsiblePublicAuthority("test")
                 .foundationDate(date)
-                .registrationNumber("FOOOO")
-                .register("FOOOO")
-                .crefoId("FOOOO")
-                .website("FOOOO")
-                .numberOfEmployees(240)
-                .taxNumber("FOOOO")
-                .subjectToVat(false)
-                .vatId("FOOOO")
+                .registrationNumber("HRB 1234")
+                .register("Berlin (Charlottenburg)")
+                .crefoId("2012961798")
+                .website("www.test.com")
+                .numberOfEmployees(32)
+                .taxNumber("1234567890")
+                .subjectToVat(true)
+                .vatId("1234567")
                 .build();
+
     }
 
 

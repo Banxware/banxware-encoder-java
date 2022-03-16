@@ -1,6 +1,5 @@
 import com.banxware.LinkIntegration;
 import com.banxware.model.MerchantLinkData;
-import com.nixxcode.jvmbrotli.common.BrotliLoader;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,7 +20,7 @@ class IntegrationTest {
 
     @Test
     void givenAnMerchantObjectItShouldEncodeAndSuccessfullySaveTheObjectUsingBanxwareService() throws IOException {
-        BrotliLoader.isBrotliAvailable();
+//        BrotliLoader.isBrotliAvailable();
 
         // Given
         MerchantLinkData merchantLinkData = Fixtures.merchantObject();
@@ -42,7 +41,7 @@ class IntegrationTest {
                 .build();
 
         HttpResponse response = client.execute(request);
-
+        System.out.println(blob);
         // Then
         assertEquals(200, response.getStatusLine().getStatusCode());
     }

@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class LinkIntegration {

@@ -1,31 +1,18 @@
 package com.banxware;
 
-import com.nixxcode.jvmbrotli.enc.BrotliOutputStream;
-import com.nixxcode.jvmbrotli.enc.Encoder;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 class Compressor {
-    public static byte[] compress(String in) throws IOException {
-        InputStream inFile = new ByteArrayInputStream(in.getBytes());
-        ByteArrayOutputStream outFile = new ByteArrayOutputStream();
+    public static byte[] compress(String data) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        DeflaterOutputStream def = new DeflaterOutputStream(out, new Deflater(Deflater.DEFLATED, true));
+        def.write(data.getBytes(StandardCharsets.UTF_8));
+        def.close();
 
-        Encoder.Parameters params = new Encoder.Parameters().setQuality(4).setWindow(16);
-
-        BrotliOutputStream brotliOutputStream = new BrotliOutputStream(outFile, params);
-
-        int read = inFile.read();
-        while (read > -1) { // -1 means EOF
-            brotliOutputStream.write(read);
-            read = inFile.read();
-        }
-
-        brotliOutputStream.close();
-        inFile.close();
-
-        return outFile.toByteArray();
+        return out.toByteArray();
     }
 }
