@@ -20,8 +20,6 @@ class IntegrationTest {
 
     @Test
     void givenAnMerchantObjectItShouldEncodeAndSuccessfullySaveTheObjectUsingBanxwareService() throws IOException {
-//        BrotliLoader.isBrotliAvailable();
-
         // Given
         MerchantLinkData merchantLinkData = Fixtures.merchantObject();
         String yourPrivateKey = Fixtures.privateKey();

@@ -20,7 +20,6 @@ public class LinkIntegration {
                     .signature(EncryptionUtils.sign(merchantInfo, privateKey))
                     .build();
 
-            // compress using brotli
             byte[] compressedJsonBlob = Compressor.compress(toJson(message));
 
             // create initialization vector and a random symmetric key
