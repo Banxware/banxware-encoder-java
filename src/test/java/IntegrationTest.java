@@ -40,6 +40,7 @@ class IntegrationTest {
 
         HttpResponse response = client.execute(request);
 
+        System.out.println(blob);
         // Then
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
