@@ -9,7 +9,7 @@ Maven:
 <dependency>
     <groupId>com.banxware</groupId>
     <artifactId>banxware-encoder</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 
 <dependency>
@@ -21,7 +21,7 @@ Maven:
 
 Gradle:
 ```groovy
-implementation "com.banxware:banxware-encoder:1.0.1"
+implementation "com.banxware:banxware-encoder:1.0.2"
 implementation 'com.google.code.gson:gson:2.8.9'
 ```
 
