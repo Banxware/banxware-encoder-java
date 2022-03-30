@@ -3,10 +3,11 @@ package com.banxware;
 import com.banxware.model.MerchantLinkData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
-import java.util.Arrays;
+import java.time.Instant;
 import java.util.Base64;
 
 public class LinkIntegration {
@@ -14,7 +15,7 @@ public class LinkIntegration {
     public static String encode(MerchantLinkData merchantLinkData, String publicKey, String privateKey) {
         try {
             // convert merchant link to json and signs with tenants' private key
-            String merchantInfo = toJson(merchantLinkData);
+            String merchantInfo = toJsonWithEncryptionTime(merchantLinkData);
             final Message message = Message.builder()
                     .merchantInfo(merchantInfo)
                     .signature(EncryptionUtils.sign(merchantInfo, privateKey))
@@ -50,6 +51,20 @@ public class LinkIntegration {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .create();
+
         return gson.toJson(o);
+    }
+
+    private static String toJsonWithEncryptionTime(MerchantLinkData data) {
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .create();
+
+        // Attach the field 'encryptionTime' to the json output
+        String currentIsoTime = Instant.now().toString();
+        JsonElement jsonElement = gson.toJsonTree(data);
+        jsonElement.getAsJsonObject().addProperty("encryptionTime", currentIsoTime);
+
+        return gson.toJson(jsonElement);
     }
 }
