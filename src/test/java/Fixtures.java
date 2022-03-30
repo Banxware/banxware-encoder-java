@@ -79,7 +79,7 @@ class Fixtures {
                 .merchantId(UUID.randomUUID().toString())
                 .name("test GmbH")
                 .email("test_gmbh@email.com")
-                .mcc("BEAUTY")
+                .mcc("5912")
                 .address(address)
                 .owners(Collections.singletonList(owner))
                 .timeOfRunBusinessInMonths(24)
